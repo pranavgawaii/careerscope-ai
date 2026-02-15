@@ -106,3 +106,9 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <div align="center">
   <small>Built with 💙 by <a href="https://github.com/pranavgawaii">Pranav Gawaii</a></small>
 </div>
+
+---
+
+<div align="center">
+  <h3>⭐ Star this repo if you like it! ⭐</h3>
+</div>

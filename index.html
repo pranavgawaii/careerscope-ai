@@ -193,6 +193,66 @@
             filter: blur(60px);
             animation: pulse-glow 10s infinite alternate;
         }
+
+        /* Spotlight Effect */
+        .spotlight-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .spotlight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.06), transparent 40%);
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .spotlight-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Magnetic Button */
+        .magnetic-btn {
+            transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* Blob Animation */
+        @keyframes blob {
+            0% {
+                transform: translate(0px, 0px) scale(1);
+            }
+
+            33% {
+                transform: translate(30px, -50px) scale(1.1);
+            }
+
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+
+            100% {
+                transform: translate(0px, 0px) scale(1);
+            }
+        }
+
+        .animate-blob {
+            animation: blob 7s infinite;
+        }
+
+        .animation-delay-2000 {
+            animation-delay: 2s;
+        }
+
+        .animation-delay-4000 {
+            animation-delay: 4s;
+        }
     </style>
     <style>
         /* 3D Transform utilities */
@@ -338,6 +398,22 @@ scaleY(var(--tw-scale-y, 1))
 <body
     class="bg-[#020617] text-slate-400 antialiased selection:bg-blue-500/30 selection:text-blue-200 overflow-x-hidden">
 
+    <!-- Grain Overlay -->
+    <div class="grain-overlay"></div>
+
+    <!-- Organic Background Blobs -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+        <div
+            class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[100px] animate-blob">
+        </div>
+        <div
+            class="absolute top-[20%] right-[-10%] w-[400px] h-[400px] bg-purple-600/20 rounded-full blur-[100px] animate-blob animation-delay-2000">
+        </div>
+        <div
+            class="absolute bottom-[-10%] left-[20%] w-[600px] h-[600px] bg-indigo-600/20 rounded-full blur-[100px] animate-blob animation-delay-4000">
+        </div>
+    </div>
+
     <!-- Background (component) added by Aura -->
     <div class="aura-background-component fixed top-0 w-full h-screen -z-10" data-alpha-mask="80"
         style="mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent); -webkit-mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent); filter: hue-rotate(-60deg);">
@@ -409,7 +485,7 @@ scaleY(var(--tw-scale-y, 1))
 
                 <div class="reveal delay-300 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
                     <button
-                        class="w-full sm:w-auto group relative px-8 py-3.5 bg-white text-black text-sm font-semibold rounded-full hover:bg-blue-50 transition-all duration-300 shadow-[0_0_20px_-5px_rgba(255,255,255,0.3)] btn-shine overflow-hidden">
+                        class="w-full sm:w-auto group relative px-8 py-3.5 bg-white text-black text-sm font-semibold rounded-full hover:bg-blue-50 transition-all duration-300 shadow-[0_0_20px_-5px_rgba(255,255,255,0.3)] btn-shine overflow-hidden magnetic-btn">
                         <span class="relative z-10 flex items-center gap-1">
                             Analyze My Resume
                             <span class="iconify group-hover:translate-x-0.5 transition-transform"
@@ -595,7 +671,7 @@ scaleY(var(--tw-scale-y, 1))
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- Feature 1: Resume Analyzer -->
                 <div
-                    class="group p-8 glass-panel glass-panel-hover rounded-2xl border border-blue-500/20 hover:bg-white/[0.05] transition-all duration-300 relative overflow-hidden reveal delay-100 cursor-pointer">
+                    class="group p-8 glass-panel glass-panel-hover spotlight-card rounded-2xl border border-blue-500/20 hover:bg-white/[0.05] transition-all duration-300 relative overflow-hidden reveal delay-100 cursor-pointer">
                     <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
                         <span class="iconify text-blue-500" data-icon="lucide:file-text" data-width="100"></span>
                     </div>
@@ -615,7 +691,7 @@ scaleY(var(--tw-scale-y, 1))
 
                 <!-- Feature 2: Interview Evaluator -->
                 <div
-                    class="group p-8 glass-panel glass-panel-hover rounded-2xl hover:bg-white/[0.05] transition-all duration-300 relative overflow-hidden reveal delay-200">
+                    class="group p-8 glass-panel glass-panel-hover spotlight-card rounded-2xl hover:bg-white/[0.05] transition-all duration-300 relative overflow-hidden reveal delay-200">
                     <div
                         class="w-12 h-12 bg-slate-800 rounded-lg flex items-center justify-center mb-6 border border-slate-700">
                         <span class="iconify text-slate-400" data-icon="lucide:mic" data-width="24"></span>
@@ -632,7 +708,7 @@ scaleY(var(--tw-scale-y, 1))
 
                 <!-- Feature 3: GitHub Analyzer -->
                 <div
-                    class="group p-8 glass-panel glass-panel-hover rounded-2xl hover:bg-white/[0.05] transition-all duration-300 reveal delay-300">
+                    class="group p-8 glass-panel glass-panel-hover spotlight-card rounded-2xl hover:bg-white/[0.05] transition-all duration-300 reveal delay-300">
                     <div
                         class="w-12 h-12 bg-slate-800 rounded-lg flex items-center justify-center mb-6 border border-slate-700">
                         <span class="iconify text-slate-400" data-icon="lucide:github" data-width="24"></span>
@@ -833,7 +909,7 @@ scaleY(var(--tw-scale-y, 1))
 
             <div class="flex justify-center">
                 <button
-                    class="px-8 py-3.5 bg-white text-black text-sm font-semibold rounded-full hover:bg-blue-50 transition-all duration-300 shadow-[0_0_20px_-5px_rgba(255,255,255,0.3)] btn-shine overflow-hidden">
+                    class="px-8 py-3.5 bg-white text-black text-sm font-semibold rounded-full hover:bg-blue-50 transition-all duration-300 shadow-[0_0_20px_-5px_rgba(255,255,255,0.3)] btn-shine overflow-hidden magnetic-btn">
                     <span class="relative z-10">Analyze My Resume Now</span>
                 </button>
             </div>
@@ -841,25 +917,71 @@ scaleY(var(--tw-scale-y, 1))
         <div class="absolute bottom-0 left-0 w-64 h-64 bg-blue-600/10 blur-[100px] pointer-events-none"></div>
     </section>
 
-    <!-- Footer -->
-    <footer class="border-t border-white/5 bg-[#020617] py-12 text-sm reveal">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-                <div class="flex items-center gap-2">
-                    <div
-                        class="w-6 h-6 rounded bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white text-[10px] font-bold">
-                        CS</div>
-                    <span class="text-white font-medium tracking-tight">CAREERSCOPE AI</span>
+    <!-- Mega Footer -->
+    <footer class="border-t border-white/5 bg-[#020617] pt-24 pb-12 text-sm relative overflow-hidden reveal">
+        <div
+            class="absolute inset-0 bg-[radial-gradient(circle_at_bottom,_var(--tw-gradient-stops))] from-blue-900/10 via-[#020617] to-[#020617] pointer-events-none">
+        </div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-2 mb-6">
+                        <div
+                            class="w-8 h-8 rounded bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white text-xs font-bold">
+                            CS</div>
+                        <span class="text-white text-lg font-medium tracking-tight">CAREERSCOPE AI</span>
+                    </div>
+                    <p class="text-slate-400 max-w-sm text-base leading-relaxed mb-8">
+                        The advanced resume intelligence platform designed to help students and early professionals
+                        break into tech.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-all duration-300">
+                            <span class="iconify" data-icon="lucide:twitter" data-width="18"></span>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-all duration-300">
+                            <span class="iconify" data-icon="lucide:linkedin" data-width="18"></span>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-all duration-300">
+                            <span class="iconify" data-icon="lucide:github" data-width="18"></span>
+                        </a>
+                    </div>
                 </div>
 
-                <div class="flex gap-8 text-slate-500">
-                    <a href="#" class="hover:text-white transition-colors">About</a>
-                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
-                    <a href="#" class="hover:text-white transition-colors">GitHub</a>
+                <div>
+                    <h4 class="text-white font-medium mb-6">Product</h4>
+                    <ul class="space-y-4 text-slate-400">
+                        <li><a href="#" class="hover:text-blue-400 transition-colors">Resume Analyzer</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition-colors">Interview Prep</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition-colors">GitHub Review</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition-colors">Pricing</a></li>
+                    </ul>
                 </div>
 
+                <div>
+                    <h4 class="text-white font-medium mb-6">Company</h4>
+                    <ul class="space-y-4 text-slate-400">
+                        <li><a href="#" class="hover:text-blue-400 transition-colors">About</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition-colors">Blog</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
                 <div class="text-slate-600 text-xs">
-                    Built by Pranav
+                    &copy; 2024 CareerScope AI. Built by Pranav.
+                </div>
+                <div class="flex gap-6 text-xs text-slate-600 font-medium tracking-wide uppercase">
+                    <span>Recruiter Ready</span>
+                    <span>•</span>
+                    <span>ATS Optimized</span>
+                    <span>•</span>
+                    <span>AI Powered</span>
                 </div>
             </div>
         </div>
@@ -887,6 +1009,55 @@ scaleY(var(--tw-scale-y, 1))
 
             const revealElements = document.querySelectorAll('.reveal');
             revealElements.forEach(el => observer.observe(el));
+
+            // Spotlight Effect
+            const cards = document.querySelectorAll('.spotlight-card');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', e => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                });
+            });
+
+            // Magnetic Button Effect
+            const magneticBtns = document.querySelectorAll('.magnetic-btn');
+            magneticBtns.forEach(btn => {
+                btn.addEventListener('mousemove', e => {
+                    const rect = btn.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+                });
+
+                btn.addEventListener('mouseleave', () => {
+                    btn.style.transform = 'translate(0, 0)';
+                });
+            });
+
+            // 3D Tilt Effect for Hero Dashboard
+            const dashboardContainer = document.querySelector('.perspective-[2000px]');
+            const dashboardCard = dashboardContainer ? dashboardContainer.querySelector('.glass-panel') : null;
+
+            if (dashboardContainer && dashboardCard) {
+                document.addEventListener('mousemove', (e) => {
+                    const { clientX, clientY } = e;
+                    const { innerWidth, innerHeight } = window;
+
+                    // Calculate center relative to viewport
+                    const centerX = innerWidth / 2;
+                    const centerY = innerHeight / 2;
+
+                    // Calculate tilt values (-1 to 1)
+                    const tiltX = (clientY - centerY) / centerY;
+                    const tiltY = (centerX - clientX) / centerX;
+
+                    // Apply tilt (max 10deg)
+                    dashboardCard.style.transform = `rotateX(${tiltX * 5 + 10}deg) rotateY(${tiltY * 5}deg)`;
+                });
+            }
         });
     </script>
 </body>
